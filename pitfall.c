@@ -7,6 +7,7 @@
 #endif
 #include <unistd.h>
 #include <stdio.h>
+#include <time.h>
 
 void setup() {
 #ifndef _WIN32
@@ -44,7 +45,26 @@ int getkey() {
 int main() {
     setup();
     
+    // while(1){
+    //     printf("getkey()) %d\n" , getkey());
+    //     usleep(10000);
+    // }
     // Your code here using getkey()
+
+
+    int x = 25;
+    srand(time(NULL));
+    for (int i = 1; i < x; i++){
+        
+        printf("#");
+    }
+    for (int j = 0; j == 9; j++){
+        print(" ");
+        //if ()
+
+    }
+
+    printf("\n");
 
     cleanup();
     return 0;
