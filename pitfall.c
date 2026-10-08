@@ -8,7 +8,9 @@
 #include <unistd.h>
 #include <stdio.h>
 #include <time.h>
-
+int pos = 30; //positie van de v (player)
+int x = 25; //positie van het gat
+int lines = 0;
 void setup() {
 #ifndef _WIN32
     int flags = fcntl(STDIN_FILENO, F_GETFL);
@@ -41,31 +43,59 @@ int getkey() {
 #endif
     return c;
 }
+int volgendegat(){
+    return (rand() % 2);
+}
+void positie(){
+    int key = getkey();
+    if (key == 'a'){
+        pos--;
+    }
+    if (key == 'd'){
+        pos++;
+    }
+}
+void gatpositie(){
+    int random = volgendegat();
+    if (((random == 0) && !(x == 1)) || x == 49) {
+        x--;
+    }else if (random == 1 || x == 1) {
+        x++;
+    }
 
+}
+int dood(){
+    if ((pos < x) || (pos > x+9)){
+        return 1;
+    }else{
+        return 0;
+    }
+}
 int main() {
     setup();
-    
-    // while(1){
-    //     printf("getkey()) %d\n" , getkey());
-    //     usleep(10000);
-    // }
-    // Your code here using getkey()
-
-
-    int x = 25;
     srand(time(NULL));
-    for (int i = 1; i < x; i++){
-        
-        printf("#");
+    while(1){
+        if (dood()) break;
+        positie();
+        gatpositie();
+        for (int i = 0; i < x; i++){
+            printf("#");
+        }
+        for (int j = 0; j < 10; j++){
+            if (j == pos - x){
+                printf("v");
+            } else printf(" ");
+        }
+        for (int k = 0; k < 50 - x; k++){
+            printf("#");
+        }
+        printf("\n");
+        usleep(200000);
+        lines++;
     }
-    for (int j = 0; j == 9; j++){
-        print(" ");
-        //if ()
-
-    }
-
-    printf("\n");
-
     cleanup();
+    printf("you were at %i\n", pos);
+    printf("and the gap was from %i\n", x);
+    printf("died after %i lines\n", lines);
     return 0;
 }
