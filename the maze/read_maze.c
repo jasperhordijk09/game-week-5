@@ -10,6 +10,9 @@ int width;
 int height;
 unsigned char *maze;
 
+int posx = 0;
+int posy = 0;
+
 void printMaze() {
     printf("Maze %d x %d\n", width, height);
     for (int i = 0; i < width; i++) {
@@ -63,11 +66,40 @@ unsigned char checkCell(int x, int y) {
     return maze[x + width * y];
 }
 
+void walkmaze(int x, int y, int lastdir) {
+    //north
+    if (checkCell(x, y + 1) & NORTH && lastdir != SOUTH) {
+        printf("N\n");
+        walkmaze(x, y + 1, NORTH);
+    }else if (checkCell(x + 1, y) & EAST && lastdir != WEST) {
+        printf("E\n");
+        walkmaze(x + 1, y, EAST);
+    }else if (checkCell(x, y - 1) & SOUTH && lastdir != NORTH) {
+        printf("S\n");
+        walkmaze(x, y - 1, SOUTH);
+    }else if (checkCell(x - 1, y) & WEST && lastdir != EAST) {
+        printf("W\n");
+        walkmaze(x - 1, y, WEST);
+    }
+}
+
 int main() {
     if (readMaze()) return 1;
+    walkmaze(0, 0, 0);
     printMaze();
-
+    
+    
     // Your code here, using checkCell(x, y)
-
     return 0;
 }
+
+
+
+// convertDirection(int dir) {
+//     switch (dir) {
+//         case NORTH: return "SOUTH";
+//         case EAST: return "WEST";
+//         case SOUTH: return "NORTH";
+//         case WEST: return "EAST";
+//     }
+//}
