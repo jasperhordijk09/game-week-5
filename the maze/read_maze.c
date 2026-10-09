@@ -4,7 +4,7 @@
 #define EAST 2
 #define SOUTH 4
 #define WEST 8
-#define FILENAME "maze.bin"
+#define FILENAME "maze_11x11.bin"
 
 int width;
 int height;
